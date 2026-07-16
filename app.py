@@ -8,6 +8,20 @@ st.markdown(
     "<style>div.stButton > button {display: block; margin: 0 auto;}</style>",
     unsafe_allow_html=True,
 )
+st.markdown(
+    """
+    <style>
+    body {
+        background: linear-gradient(135deg, #ff6b6b, #c0392b);
+        min-height: 100vh;
+    }
+    .stApp {
+        background: transparent;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
 
 PHOTO_PATH = "IMG_6960.jpeg"
