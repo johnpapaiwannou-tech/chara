@@ -97,9 +97,12 @@ if show_photo:
                 <img class="photo" src="data:image/jpeg;base64,{img_b64}" alt="My Photo" />
                 <p class="caption">My Photo</p>
                 <p class="love">
-                    I will always love you. <br/>
-                    I will always be your everything.<br/>
-                    I will always be your soulmate.
+                    Στην αγορά του Αλ Χαλίλι. <br/>
+                    θα πουλαν τα δύο σου χείλη.<br/>
+                    δυο περιουσίες και άλλη μια.<br/>
+                    τέσσερις εγώ θα δώσω.<br/>
+                    θα πληρώσω όσο όσο.<br/>
+                    να μου κάνουν μία μελανία.<br/>
                 </p>
             </div>
             <div id="hearts"></div>
