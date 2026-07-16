@@ -150,16 +150,26 @@ photo_files = sorted(
 )
 
 if photo_files:
-    images_b64 = []
+    images_data = []
+    mime_types = {
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png",
+        ".gif": "image/gif",
+        ".webp": "image/webp",
+    }
     for photo in photo_files:
-        images_b64.append(get_image_base64(os.path.join(UPLOAD_DIR, photo)))
+        ext = os.path.splitext(photo)[1].lower()
+        b64 = get_image_base64(os.path.join(UPLOAD_DIR, photo))
+        mime = mime_types.get(ext, "image/jpeg")
+        images_data.append({"b64": b64, "mime": mime})
     
-    images_json = str(images_b64)
+    images_json = str(images_data)
     
     components.html(
         f"""
         <div class="gallery-container">
-            <img id="slide" class="slide-image" src="data:image/jpeg;base64,{images_b64[0]}" />
+            <img id="slide" class="slide-image" src="data:{images_data[0]['mime']};base64,{images_data[0]['b64']}" />
             <p id="counter" class="counter">1 / {len(photo_files)}</p>
         </div>
         
@@ -197,7 +207,7 @@ if photo_files:
         const counter = document.getElementById("counter");
         
         function showSlide(i) {{
-            slide.src = "data:image/jpeg;base64," + images[i];
+            slide.src = "data:" + images[i].mime + ";base64," + images[i].b64;
             counter.textContent = (i + 1) + " / " + images.length;
         }}
         
