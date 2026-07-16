@@ -150,17 +150,67 @@ photo_files = sorted(
 )
 
 if photo_files:
-    if "photo_index" not in st.session_state:
-        st.session_state.photo_index = 0
-
-    current_photo = photo_files[st.session_state.photo_index]
-    st.image(os.path.join(UPLOAD_DIR, current_photo), width=400)
-    st.caption(f"{st.session_state.photo_index + 1} / {len(photo_files)}")
-
-    import time
-    time.sleep(3)
-    st.session_state.photo_index = (st.session_state.photo_index + 1) % len(photo_files)
-    st.rerun()
+    images_b64 = []
+    for photo in photo_files:
+        images_b64.append(get_image_base64(os.path.join(UPLOAD_DIR, photo)))
+    
+    images_json = str(images_b64)
+    
+    components.html(
+        f"""
+        <div class="gallery-container">
+            <img id="slide" class="slide-image" src="data:image/jpeg;base64,{images_b64[0]}" />
+            <p id="counter" class="counter">1 / {len(photo_files)}</p>
+        </div>
+        
+        <style>
+        .gallery-container {{
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 500px;
+            background: transparent;
+        }}
+        .slide-image {{
+            max-height: 600px;
+            width: auto;
+            max-width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            object-fit: contain;
+        }}
+        .counter {{
+            color: #000;
+            font-weight: 600;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.6), 0 0 10px rgba(255,255,255,0.7);
+            margin-top: 15px;
+            font-size: 16px;
+        }}
+        </style>
+        
+        <script>
+        const images = {images_json};
+        let index = 0;
+        const slide = document.getElementById("slide");
+        const counter = document.getElementById("counter");
+        
+        function showSlide(i) {{
+            slide.src = "data:image/jpeg;base64," + images[i];
+            counter.textContent = (i + 1) + " / " + images.length;
+        }}
+        
+        function nextSlide() {{
+            index = (index + 1) % images.length;
+            showSlide(index);
+        }}
+        
+        setInterval(nextSlide, 3000);
+        </script>
+        """,
+        height=700,
+    )
 else:
     st.subheader("Η συλλογή μας")
     st.write("Βάλε φωτογραφίες στον φάκελο photos για να εμφανιστούν εδώ...")
