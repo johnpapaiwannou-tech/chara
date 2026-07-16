@@ -3,12 +3,8 @@ import os
 import streamlit as st
 import streamlit.components.v1 as components
 
-st.title("Για το κορίτσι μου")
+st.set_page_config(page_title="Για το κορίτσι μου", page_icon="💖", layout="wide")
 
-st.markdown(
-    "<style>div.stButton > button {display: block; margin: 0 auto;}</style>",
-    unsafe_allow_html=True,
-)
 st.markdown(
     """
     <style>
@@ -20,11 +16,19 @@ st.markdown(
         background: transparent;
     }
     h1 {
-        color: #000;
-        text-shadow: 0 1px 6px rgba(0,0,0,0.7), 0 0 20px rgba(255,255,255,0.9);
+        text-align: center;
+        color: #fff;
         font-weight: 800;
+        font-size: 3rem;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.3);
+        margin-bottom: 10px;
+        letter-spacing: 2px;
     }
-    p, .stMarkdown {
+    .stDivider {
+        border-color: rgba(255,255,255,0.3);
+        margin: 30px 0;
+    }
+    p, .stMarkdown, .stCaption {
         color: #000;
         text-shadow: 0 1px 4px rgba(0,0,0,0.6), 0 0 10px rgba(255,255,255,0.7);
         font-weight: 600;
@@ -33,6 +37,8 @@ st.markdown(
     """,
     unsafe_allow_html=True,
 )
+
+st.title("Για το κορίτσι μου")
 
 PHOTO_PATH = "IMG_6960.jpeg"
 UPLOAD_DIR = "photos"
@@ -44,7 +50,7 @@ def get_image_base64(path):
         return base64.b64encode(f.read()).decode()
 
 
-show_photo = st.button("Πάτα με!!")
+show_photo = st.button("Πάτα με!!", type="primary")
 if show_photo:
     img_b64 = get_image_base64(PHOTO_PATH)
 
@@ -85,6 +91,7 @@ if show_photo:
             width: 100%;
             border-radius: 12px;
             display: block;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }}
         .caption {{
             color: #111;
@@ -187,16 +194,18 @@ if photo_files:
             max-height: 600px;
             width: auto;
             max-width: 100%;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+            border-radius: 16px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.6), 0 0 30px rgba(214,51,108,0.5);
             object-fit: contain;
+            transition: opacity 0.8s ease-in-out;
         }}
         .counter {{
-            color: #000;
-            font-weight: 600;
-            text-shadow: 0 1px 4px rgba(0,0,0,0.6), 0 0 10px rgba(255,255,255,0.7);
-            margin-top: 15px;
-            font-size: 16px;
+            color: #fff;
+            font-weight: 700;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8), 0 0 15px rgba(255,255,255,0.5);
+            margin-top: 20px;
+            font-size: 18px;
+            letter-spacing: 2px;
         }}
         </style>
         
@@ -207,8 +216,12 @@ if photo_files:
         const counter = document.getElementById("counter");
         
         function showSlide(i) {{
-            slide.src = "data:" + images[i].mime + ";base64," + images[i].b64;
-            counter.textContent = (i + 1) + " / " + images.length;
+            slide.style.opacity = '0';
+            setTimeout(() => {{
+                slide.src = "data:" + images[i].mime + ";base64," + images[i].b64;
+                slide.style.opacity = '1';
+                counter.textContent = (i + 1) + " / " + images.length;
+            }}, 800);
         }}
         
         function nextSlide() {{
