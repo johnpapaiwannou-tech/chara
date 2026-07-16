@@ -278,3 +278,23 @@ if photo_files:
 else:
     st.subheader("Η συλλογή μας")
     st.write("Βάλε φωτογραφίες στον φάκελο photos για να εμφανιστούν εδώ...")
+
+st.divider()
+
+st.subheader("🎵 Το τραγούδι μας")
+
+spotify_url = st.text_input(
+    "Βάλε το Spotify link εδώ",
+    placeholder="https://open.spotify.com/track/...",
+)
+
+if spotify_url:
+    import re
+    match = re.search(r"spotify\.com/(track|playlist|album)/([a-zA-Z0-9]+)", spotify_url)
+    if match:
+        spotify_type = match.group(1)
+        spotify_id = match.group(2)
+        spotify_embed = f"https://open.spotify.com/embed/{spotify_type}/{spotify_id}?utm_source=generator&theme=0"
+        components.iframe(spotify_embed, height=152, scrolling=False)
+    else:
+        st.error("Μη έγκυρο Spotify link. Χρησιμοποίησε format: https://open.spotify.com/track/...")
