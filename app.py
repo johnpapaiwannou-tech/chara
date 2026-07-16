@@ -24,6 +24,18 @@ st.markdown(
         margin-bottom: 10px;
         letter-spacing: 2px;
     }
+    div.stButton > button {
+        display: block;
+        margin: 30px auto;
+        font-size: 1.5rem;
+        padding: 20px 60px;
+        border-radius: 50px;
+        font-weight: 700;
+        background-color: #ff4757;
+        color: white;
+        border: none;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
     .stDivider {
         border-color: rgba(255,255,255,0.3);
         margin: 30px 0;
@@ -88,9 +100,11 @@ if show_photo:
             padding: 10px;
         }}
         .photo {{
-            width: 100%;
+            width: 55%;
+            max-width: 500px;
             border-radius: 12px;
             display: block;
+            margin: 0 auto;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }}
         .caption {{
