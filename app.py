@@ -150,34 +150,17 @@ photo_files = sorted(
 )
 
 if photo_files:
-    st.subheader("Η συλλογή μας")
-    
     if "photo_index" not in st.session_state:
         st.session_state.photo_index = 0
-    
-    col1, col2, col3 = st.columns([1, 3, 1])
-    with col1:
-        if st.button("⏮️") and st.session_state.photo_index > 0:
-            st.session_state.photo_index -= 1
-    with col3:
-        if st.button("⏭️") and st.session_state.photo_index < len(photo_files) - 1:
-            st.session_state.photo_index += 1
-    
+
     current_photo = photo_files[st.session_state.photo_index]
-    st.image(os.path.join(UPLOAD_DIR, current_photo), use_container_width=True)
+    st.image(os.path.join(UPLOAD_DIR, current_photo), width=400)
     st.caption(f"{st.session_state.photo_index + 1} / {len(photo_files)}")
-    
-    if st.button("▶️ Αυτόματη αναπαραγωγή"):
-        st.session_state.auto_play = True
-    
-    if st.button("⏸️ Σταμάτα"):
-        st.session_state.auto_play = False
-    
-    if st.session_state.get("auto_play", False):
-        import time
-        time.sleep(2)
-        st.session_state.photo_index = (st.session_state.photo_index + 1) % len(photo_files)
-        st.rerun()
+
+    import time
+    time.sleep(3)
+    st.session_state.photo_index = (st.session_state.photo_index + 1) % len(photo_files)
+    st.rerun()
 else:
     st.subheader("Η συλλογή μας")
     st.write("Βάλε φωτογραφίες στον φάκελο photos για να εμφανιστούν εδώ...")
