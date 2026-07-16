@@ -285,7 +285,7 @@ st.subheader("🎵 Το τραγούδι μας")
 
 spotify_url = st.text_input(
     "Βάλε το Spotify link εδώ",
-    placeholder="https://open.spotify.com/track/...",
+    placeholder="https://open.spotify.com/track/1ye13rIpHZQ47yHjuPBnU4",
 )
 
 if spotify_url:
