@@ -8,9 +8,19 @@ st.set_page_config(page_title="Για το κορίτσι μου", page_icon="�
 st.markdown(
     """
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
     body {
-        background: linear-gradient(135deg, #ff6b6b, #c0392b);
+        background: linear-gradient(135deg, #ff6b6b, #c0392b, #e74c3c);
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
         min-height: 100vh;
+        font-family: 'Poppins', sans-serif;
+    }
+    @keyframes gradientBG {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
     }
     .stApp {
         background: transparent;
@@ -18,32 +28,46 @@ st.markdown(
     h1 {
         text-align: center;
         color: #fff;
-        font-weight: 800;
-        font-size: 3rem;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.3);
-        margin-bottom: 20px;
-        letter-spacing: 2px;
+        font-weight: 700;
+        font-size: 3.5rem;
+        text-shadow: 0 2px 15px rgba(0,0,0,0.3);
+        margin-bottom: 15px;
+        letter-spacing: 3px;
+    }
+    .stDivider {
+        border-color: rgba(255,255,255,0.2);
+        margin: 25px 0;
     }
     div.stButton > button {
         display: block;
         margin: 0 auto;
-        font-size: 1.5rem;
-        padding: 20px 60px;
+        font-size: 1.4rem;
+        padding: 18px 55px;
         border-radius: 50px;
-        font-weight: 700;
-        background-color: #ff4757;
+        font-weight: 600;
+        background: linear-gradient(135deg, #ff6b6b, #ff4757);
         color: white;
         border: none;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        box-shadow: 0 10px 25px rgba(255,71,87,0.4);
+        transition: all 0.3s ease;
+        cursor: pointer;
+        font-family: 'Poppins', sans-serif;
     }
-    .stDivider {
-        border-color: rgba(255,255,255,0.3);
-        margin: 30px 0;
+    div.stButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 15px 35px rgba(255,71,87,0.6);
     }
     p, .stMarkdown, .stCaption {
-        color: #000;
-        text-shadow: 0 1px 4px rgba(0,0,0,0.6), 0 0 10px rgba(255,255,255,0.7);
+        color: #fff;
+        text-shadow: 0 1px 6px rgba(0,0,0,0.7);
+        font-weight: 500;
+        font-family: 'Poppins', sans-serif;
+    }
+    .stSubheader {
+        color: #fff !important;
         font-weight: 600;
+        text-align: center;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
     </style>
     """,
@@ -62,7 +86,7 @@ def get_image_base64(path):
         return base64.b64encode(f.read()).decode()
 
 
-show_photo = st.button("Πάτα με!!", type="primary")
+show_photo = st.button("Πάτα με!!")
 if show_photo:
     img_b64 = get_image_base64(PHOTO_PATH)
 
@@ -100,11 +124,9 @@ if show_photo:
             padding: 10px;
         }}
         .photo {{
-            width: 55%;
-            max-width: 500px;
+            width: 100%;
             border-radius: 12px;
             display: block;
-            margin: 0 auto;
             box-shadow: 0 10px 40px rgba(0,0,0,0.5);
         }}
         .caption {{
