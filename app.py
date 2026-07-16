@@ -145,32 +145,39 @@ if show_photo:
 
 st.divider()
 
-uploaded_files = st.file_uploader(
-    "Βάλε φωτογραφίες εδώ",
-    type=["jpg", "jpeg", "png", "gif", "webp"],
-    accept_multiple_files=True,
-)
-
-if uploaded_files:
-    for uploaded_file in uploaded_files:
-        file_path = os.path.join(UPLOAD_DIR, uploaded_file.name)
-        with open(file_path, "wb") as f:
-            f.write(uploaded_file.getbuffer())
-    st.success(f"Έσπασες {len(uploaded_files)} φωτογραφία(ες)!")
-
-st.divider()
-
 photo_files = sorted(
     [f for f in os.listdir(UPLOAD_DIR) if f.lower().endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))]
 )
 
 if photo_files:
     st.subheader("Η συλλογή μας")
-    cols = st.columns(3)
-    for idx, photo in enumerate(photo_files):
-        col = cols[idx % 3]
-        with col:
-            st.image(os.path.join(UPLOAD_DIR, photo), use_container_width=True)
+    
+    if "photo_index" not in st.session_state:
+        st.session_state.photo_index = 0
+    
+    col1, col2, col3 = st.columns([1, 3, 1])
+    with col1:
+        if st.button("⏮️") and st.session_state.photo_index > 0:
+            st.session_state.photo_index -= 1
+    with col3:
+        if st.button("⏭️") and st.session_state.photo_index < len(photo_files) - 1:
+            st.session_state.photo_index += 1
+    
+    current_photo = photo_files[st.session_state.photo_index]
+    st.image(os.path.join(UPLOAD_DIR, current_photo), use_container_width=True)
+    st.caption(f"{st.session_state.photo_index + 1} / {len(photo_files)}")
+    
+    if st.button("▶️ Αυτόματη αναπαραγωγή"):
+        st.session_state.auto_play = True
+    
+    if st.button("⏸️ Σταμάτα"):
+        st.session_state.auto_play = False
+    
+    if st.session_state.get("auto_play", False):
+        import time
+        time.sleep(2)
+        st.session_state.photo_index = (st.session_state.photo_index + 1) % len(photo_files)
+        st.rerun()
 else:
     st.subheader("Η συλλογή μας")
-    st.write("Δεν έχεις βάλει ακόμα φωτογραφίες...")
+    st.write("Βάλε φωτογραφίες στον φάκελο photos για να εμφανιστούν εδώ...")
