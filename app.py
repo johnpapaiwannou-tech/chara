@@ -21,12 +21,12 @@ st.markdown(
         font-weight: 800;
         font-size: 3rem;
         text-shadow: 0 2px 10px rgba(0,0,0,0.5), 0 0 30px rgba(255,255,255,0.3);
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         letter-spacing: 2px;
     }
     div.stButton > button {
         display: block;
-        margin: 30px auto;
+        margin: 0 auto;
         font-size: 1.5rem;
         padding: 20px 60px;
         border-radius: 50px;
