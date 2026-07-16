@@ -1,4 +1,5 @@
 import base64
+import os
 import streamlit as st
 import streamlit.components.v1 as components
 
@@ -33,8 +34,9 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-
 PHOTO_PATH = "IMG_6960.jpeg"
+UPLOAD_DIR = "photos"
+os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
 def get_image_base64(path):
@@ -132,7 +134,6 @@ if show_photo:
             container.appendChild(heart);
             setTimeout(() => heart.remove(), 6000);
         }}
-        // continuous rain of hearts
         for (let i = 0; i < 80; i++) {{
             setTimeout(drop, i * 150);
         }}
@@ -141,3 +142,35 @@ if show_photo:
         """,
         height=760,
     )
+
+st.divider()
+
+uploaded_files = st.file_uploader(
+    "Βάλε φωτογραφίες εδώ",
+    type=["jpg", "jpeg", "png", "gif", "webp"],
+    accept_multiple_files=True,
+)
+
+if uploaded_files:
+    for uploaded_file in uploaded_files:
+        file_path = os.path.join(UPLOAD_DIR, uploaded_file.name)
+        with open(file_path, "wb") as f:
+            f.write(uploaded_file.getbuffer())
+    st.success(f"Έσπασες {len(uploaded_files)} φωτογραφία(ες)!")
+
+st.divider()
+
+photo_files = sorted(
+    [f for f in os.listdir(UPLOAD_DIR) if f.lower().endswith((".jpg", ".jpeg", ".png", ".gif", ".webp"))]
+)
+
+if photo_files:
+    st.subheader("Η συλλογή μας")
+    cols = st.columns(3)
+    for idx, photo in enumerate(photo_files):
+        col = cols[idx % 3]
+        with col:
+            st.image(os.path.join(UPLOAD_DIR, photo), use_container_width=True)
+else:
+    st.subheader("Η συλλογή μας")
+    st.write("Δεν έχεις βάλει ακόμα φωτογραφίες...")
