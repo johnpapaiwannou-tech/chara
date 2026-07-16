@@ -18,6 +18,16 @@ st.markdown(
     .stApp {
         background: transparent;
     }
+    h1 {
+        color: #000;
+        text-shadow: 0 1px 6px rgba(0,0,0,0.7), 0 0 20px rgba(255,255,255,0.9);
+        font-weight: 800;
+    }
+    p, .stMarkdown {
+        color: #000;
+        text-shadow: 0 1px 4px rgba(0,0,0,0.6), 0 0 10px rgba(255,255,255,0.7);
+        font-weight: 600;
+    }
     </style>
     """,
     unsafe_allow_html=True,
@@ -75,15 +85,18 @@ if show_photo:
             display: block;
         }}
         .caption {{
-            color: #555;
+            color: #111;
             font-size: 14px;
+            font-weight: 600;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.6), 0 0 8px rgba(255,255,255,0.6);
             margin: 6px 0 20px 0;
         }}
         .love {{
             font-size: 20px;
-            color: #d6336c;
-            font-weight: 600;
+            color: #000;
+            font-weight: 700;
             line-height: 1.6;
+            text-shadow: 0 1px 4px rgba(0,0,0,0.7), 0 0 12px rgba(255,255,255,0.8), 0 0 20px rgba(214,51,108,0.9);
         }}
         #hearts {{
             position: absolute;
